@@ -213,7 +213,6 @@ export const baseConfig = defineConfig({
     // Import plugin
     // -------------------------------------------------------------------------
     "import/consistent-type-specifier-style": "off",
-    "import/extensions": ["error", "always", { ignorePackages: true }],
     "import/first": "error",
     "import/no-absolute-path": "error",
     "import/no-anonymous-default-export": [
