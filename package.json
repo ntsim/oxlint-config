@@ -1,0 +1,50 @@
+{
+  "name": "@ntsim/oxlint-config",
+  "version": "0.2.0",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint --report-unused-disable-directives --deny-warnings",
+    "lint:fix": "oxlint --fix --report-unused-disable-directives --deny-warnings",
+    "types": "tsc --noEmit",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-testing-library": "^7.16.2"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.3",
+    "oxfmt": "^0.48.0",
+    "tsdown": "^0.22.0"
+  },
+  "peerDependencies": {
+    "oxlint": "^1.63.0",
+    "oxlint-tsgolint": "^0.22.1"
+  },
+  "lint-staged": {
+    "*": [
+      "oxfmt --no-error-on-unmatched-pattern"
+    ],
+    "*.{ts,tsx,js,jsx}": [
+      "oxlint --report-unused-disable-directives --deny-warnings"
+    ]
+  },
+  "engines": {
+    "node": "^24.14.1"
+  },
+  "packageManager": "pnpm@11.0.9+sha512.34ce82e6780233cf9cad8685029a8f81d2e06196c5a9bad98879f7424940c6817c4e4524fb7d38b8553ceed48b9758b8ebaf1abd3600c232c4c8cf7366086f38"
+}
