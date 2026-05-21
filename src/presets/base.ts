@@ -184,13 +184,11 @@ export const baseConfig = defineConfig({
       "error",
       {
         name: "isFinite",
-        message:
-          "Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite",
+        message: "Use Number.isFinite instead",
       },
       {
         name: "isNaN",
-        message:
-          "Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan",
+        message: "Use Number.isNaN instead",
       },
       ...confusingBrowserGlobals,
     ],

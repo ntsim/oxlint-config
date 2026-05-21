@@ -29,6 +29,32 @@ export default defineConfig({
 });
 ```
 
+### Peer dependencies
+
+Additional peer dependencies need to be installed alongside the config. The following are required:
+
+- `oxlint` - Required by the linter itself and needed for every preset
+
+The following peer dependencies are optional:
+
+- `oxlint-tsgolint`
+  - For type-aware (when `options.typeAware: true`) TypeScript rules
+- `eslint-plugin-testing-library`
+  - For `testingLibraryConfig` rules
+- `eslint-plugin-jest-dom`
+  - For `testingLibraryConfig` rules
+
+Install whichever peers match the presets you extend. For example, a React + TypeScript project that wants type-aware rules and
+Testing Library coverage would install:
+
+```bash
+npm install --save-dev oxlint oxlint-tsgolint eslint-plugin-testing-library eslint-plugin-jest-dom
+```
+
+A project using only `baseConfig` + `reactConfig` only needs `oxlint`.
+
+> Note: `baseConfig`, `reactConfig`, and `vitestConfig` rely solely on plugins bundled with `oxlint` itself, so they don't require any additional peers.
+
 ## Development
 
 ### Prerequisites
@@ -93,3 +119,41 @@ tsconfig.json           # Strict TS config (no emit, bundler resolution)
 1. Create `src/presets/<name>.ts` exporting a `defineConfig({...})` from `oxlint`.
 2. Re-export it from `src/index.ts`.
 3. If the preset should apply to this repo, add it to the `extends` array in `oxlint.config.ts`.
+
+### Versioning & changelog
+
+Version history and `CHANGELOG.md` are managed with [Changesets](https://github.com/changesets/changesets). Every user-facing change should ship with a changeset.
+
+**Workflow:**
+
+1. After making your changes, create a changeset:
+
+   ```bash
+   pnpm changeset
+   ```
+
+   You'll be prompted to pick a bump type (`patch`, `minor`, or `major`) and write a short summary. This generates a markdown file under `.changeset/` — commit it alongside your code.
+
+2. When it's time to release, bump the version and update `CHANGELOG.md`:
+
+   ```bash
+   pnpm changeset version
+   ```
+
+   This consumes any pending changesets, bumps `package.json`, and rewrites `CHANGELOG.md`. Commit the result.
+
+3. Publish:
+
+   ```bash
+   pnpm changeset publish
+   ```
+
+   `prepublishOnly` will run type checks and the build first.
+
+**Bump-type guidance:**
+
+- `patch` — bug fixes, internal refactors, doc-only changes that affect consumers.
+- `minor` — new presets, new rules added to a preset, additive non-breaking changes.
+- `major` — removing/renaming a preset, changing rule severities in a way that will break existing consumers, or any other breaking change.
+
+Don't hand-edit `CHANGELOG.md` — let `pnpm changeset:version` regenerate it.
